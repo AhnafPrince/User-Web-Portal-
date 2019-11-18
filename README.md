@@ -10,7 +10,8 @@ Database: Oracle
 Server : Apache Tomcat Server(Built in NetBeans) 
 
 
-Features :  #Registration with Password Encryption & available valid email
+Features :  
+            #Registration with Password Encryption & available valid email
 
             #Changing Passwords 
 
