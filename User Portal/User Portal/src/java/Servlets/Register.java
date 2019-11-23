@@ -43,11 +43,12 @@ public class Register extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-       
-            boolean flag = false;
+
+            boolean nameFlag = false, addressFlag = false, phoneFlag = false, emailFlag = false, passFlag = false;
+
             DB_Connection db = new DB_Connection();
             HttpSession session = request.getSession();
-            
+
             /*
             
              */
@@ -55,47 +56,47 @@ public class Register extends HttpServlet {
 
             if (db.checkEmailAvailable(email)) {
 
-                if (email == "") {
+                if (email == "" || email == null) {
                     out.println("<font color=red><b>" + email + "</b> Email id is required!</font>");
-                    flag = false;
+                    emailFlag = false;
                 } else if (db.isValid(email)) {
 
                     out.println("<font color=green><b>" + email + "</b> is avaliable</font>");
-                    flag = true;
+                    emailFlag = true;
 
                 } else {
                     out.println("<font color=red><b>" + email + "</b> is an invalid email!</font>");
-                    flag = false;
+                    emailFlag = false;
                 }
             } else {
                 out.println("<font color=red><b>" + email + "</b> is already in use</font>");
-                flag = false;
+                emailFlag = false;
             }
 
             String firstName = request.getParameter("firstName");
-            if (firstName == "") {
+            if (firstName == "" || firstName == null) {
                 out.println("<font color=red> FirstName is required!</font>");
                 out.println();
-                flag = false;
+                nameFlag = false;
             } else {
-                flag = true;
+                nameFlag = true;
             }
             String lastName = request.getParameter("lastName");
             String address = request.getParameter("address");
-            if (address == "") {
+            if (address == "" || address == null) {
                 out.println("<font color=red> Address is required!</font>");
                 out.println();
-                flag = false;
+                addressFlag = false;
             } else {
-                flag = true;
+                addressFlag = true;
             }
             String phone = request.getParameter("phone");
-            if (phone == "") {
+            if (phone == "" || phone == null) {
                 out.println("<font color=red> Phone No is required!</font>");
                 out.println();
-                flag = false;
+                phoneFlag = false;
             } else {
-                flag = true;
+                phoneFlag = true;
             }
             String date = request.getParameter("birthDate");
 
@@ -106,9 +107,9 @@ public class Register extends HttpServlet {
             if (passWord == "") {
                 out.println("<font color=red> Password is required!</font>");
                 out.println();
-                flag = false;
+                passFlag = false;
             } else {
-                flag = true;
+                passFlag = true;
 
                 ProtectUserPassword pup = new ProtectUserPassword();
                 salt = pup.getSaltValue();
@@ -116,19 +117,20 @@ public class Register extends HttpServlet {
 
             }
 
-            if (flag == true && db.isValid(email) && db.checkEmailAvailable(email)) {
+            if (nameFlag==true && addressFlag==true && emailFlag==true && phoneFlag==true && passFlag==true) {
+                if (db.isValid(email) && db.checkEmailAvailable(email)) {
 
-                db.registerUser(firstName, lastName, address, phone, email, date, securePassword, salt, out);
+                    db.registerUser(firstName, lastName, address, phone, email, date, securePassword, salt, out);
 
-                String[] profileData = db.getUserProfile(email, out);
-                profileData[5] = email;
-                session.setAttribute("userProfileData", profileData);
-                RequestDispatcher rd = request.getRequestDispatcher("UserProfile.jsp");
-                rd.forward(request, response);
-
+                    String[] profileData = db.getUserProfile(email, out);
+                    profileData[5] = email;
+                    session.setAttribute("userProfileData", profileData);
+                    RequestDispatcher rd = request.getRequestDispatcher("UserProfile.jsp");
+                    rd.forward(request, response);
+                }
             } else {
                 out.println("<font color=red> Insert failed!</font>");
-                request.setAttribute("failedRegister", "All field including valid email is required for registration!");
+                request.setAttribute("failedRegister", "All fields including valid email is required for registration!");
                 RequestDispatcher rd = request.getRequestDispatcher("Register.jsp");
                 rd.forward(request, response);
             }

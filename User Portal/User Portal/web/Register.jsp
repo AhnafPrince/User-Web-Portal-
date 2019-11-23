@@ -34,7 +34,7 @@
                     $(".estatus").html("<img src='images/loading.gif'><font color=gray> Checking availability...</font>");
                     $.ajax({
                         type: "POST",
-                        url: "Register",
+                        url: "CheckEmail",
                         data: "email=" + email,
                         success: function (msg) {
 
@@ -42,10 +42,11 @@
 
                                 $(".estatus").html(msg);
 
-                            });
+                            });  
                         }
                     });
                 });
+                
                              
             });
                         
@@ -77,28 +78,28 @@
                     <tr>
 
                         <td><b><pre><br>First Name  </pre></b></td>
-                      <td><input type="text" class="form-control" name="firstName"></td>
+                      <td><input type="text" class="firstName" class="form-control" name="firstName"> <span class="fstatus"></span> </td>
 
                     </tr>
 
                     <tr>
 
                         <td><b><pre><br>Last Name  </pre></b></td>
-                        <td><input type="text" class="form-control" name="lastName"></td>
+                        <td><input type="text" class="lastName" class="form-control" name="lastName"> <span class="lstatus"></span> </td>
 
                     </tr>
 
                     <tr>
 
                         <td><b><pre><br> Address </pre></b></td>
-                        <td><input type="text" class="form-control" name="address"></td>
+                        <td><input type="text" class="address" class="form-control" name="address"> <span class="astatus"></span> </td>
                       
                     </tr>
 
                     <tr>
 
                         <td><b><pre><br>  Phone</pre></b></td>
-                        <td><input type="text" class="form-control" name="phone"></td>
+                        <td><input type="text" class="phone" class="form-control" name="phone"> <span class="phstatus"></span> </td>
                    
                     </tr>
 
@@ -119,14 +120,14 @@
                     <tr>
 
                         <td><b><pre><br>Birth date</pre></b></td>
-                        <td><input type="date"  class="form-control" name="birthDate"></td>
+                        <td><input type="date" class="birthDate"  class="form-control" name="birthDate"> <span class="dstatus"></span> </td>
 
                     </tr>
 
                     <tr>
 
                         <td><b><pre><br> Password </pre></b></td>
-                        <td><input type="password" class="form-control" name="passWord"></td> 
+                        <td><input type="password" class="passWord" class="form-control" name="passWord"> <span class="pstatus"></span> </td> 
 
                     </tr>
 
