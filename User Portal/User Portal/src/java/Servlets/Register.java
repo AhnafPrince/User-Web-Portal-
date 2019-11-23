@@ -49,9 +49,6 @@ public class Register extends HttpServlet {
             DB_Connection db = new DB_Connection();
             HttpSession session = request.getSession();
 
-            /*
-            
-             */
             String email = request.getParameter("email");
 
             if (db.checkEmailAvailable(email)) {
