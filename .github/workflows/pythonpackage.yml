@@ -32,6 +32,3 @@ jobs:
       run: |
         pip install pytest
         pytest
-        
-        
-  git rm -rf <UserPortal>
