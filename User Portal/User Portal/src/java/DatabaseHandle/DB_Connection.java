@@ -99,7 +99,7 @@ public class DB_Connection {
                 }
             }
             connection.close();
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             out.println("Could not get user List information " + ex.getMessage());
         }
 
